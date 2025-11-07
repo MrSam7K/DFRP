@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "dfrp",
+  "version": "${version}",
+  "name": "DFRP",
+  "description": "mc mod that shows discord people what r u doing on df :thumbsup:",
+  "authors": ["me (MrSam7K)"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/dfrp",
+    "sources": "https://github.com/MrSam7K/DFRP",
+    "issues": "https://github.com/MrSam7K/DFRP/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/dfrp/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.mrsam7k.dfrp.DFRPClient"
+    ]
+  },
+  "mixins": [
+    "dfrp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "flint": ">=1.0.0"
+  }
+}
