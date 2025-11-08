@@ -69,6 +69,9 @@ dependencies {
 
     //Discord RPC
     modImplementation include("dev.firstdark.discordrpc:discord-rpc:${project.discordrpc_version}")
+
+    //Gson
+    implementation "com.google.code.gson:gson:${project.gson_version}"
 }
 
 processResources {
