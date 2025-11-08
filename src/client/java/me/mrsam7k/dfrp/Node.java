@@ -1,5 +1,7 @@
 package me.mrsam7k.dfrp;
 
+import dev.dfonline.flint.Flint;
+
 public enum Node {
     NODE1("node1", "Origins"),
     NODE2("node2", "Arcade"),
@@ -20,7 +22,6 @@ public enum Node {
     EVENT("https://minecraft.wiki/images/Nether_Star.gif", "Event"),
     NONE("none", "None"),;
 
-
     final String imageKey;
     final String displayName;
 
@@ -30,6 +31,9 @@ public enum Node {
     }
 
     public static String getImageKey(dev.dfonline.flint.hypercube.Node node) {
+        if(node.getId().equals("private"))
+            return PrivateNode.getPrivateNodeHeadURL(Flint.getUser().getNodeId());
+
         for(Node key : Node.values()) {
             if(node.getId().equals(key.name().toLowerCase())) {
                 return key.imageKey;
@@ -40,6 +44,9 @@ public enum Node {
     }
 
     public static String getDisplayName(dev.dfonline.flint.hypercube.Node node) {
+        if(node.getId().equals("private"))
+            return PrivateNode.getDisplayName(Flint.getUser().getNodeId());
+
         for(Node key : Node.values()) {
             if(node.getId().equals(key.name().toLowerCase())) {
                 return key.displayName;

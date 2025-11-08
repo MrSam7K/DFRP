@@ -1,5 +1,6 @@
 package me.mrsam7k.dfrp;
 
+import com.google.gson.Gson;
 import dev.dfonline.flint.Flint;
 import dev.dfonline.flint.FlintAPI;
 import dev.dfonline.flint.hypercube.Mode;
@@ -15,22 +16,34 @@ import me.mrsam7k.dfrp.feature.ChangeMode;
 import me.mrsam7k.dfrp.feature.OnTick;
 import me.mrsam7k.dfrp.feature.PlotSwitch;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DFRPClient implements ClientModInitializer {
+    public static final String MOD_ID = "DFRP";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Gson GSON = new Gson();
+
+    public static MinecraftClient MC = MinecraftClient.getInstance();
+
     public static DiscordRpc rpc = null;
+
     public static Plot currentPlot;
     public static Mode currentMode = Mode.NONE;
     public static dev.dfonline.flint.hypercube.Node currentNode = null;
-    public static long plotChangeTimestamp = System.currentTimeMillis();
-    public static final Logger LOGGER = LoggerFactory.getLogger("DFRP");
+
     public static boolean ready = false;
     public static boolean gettingReady = false;
+
+    public static long plotChangeTimestamp = System.currentTimeMillis();
     public static long startedGettingReadyAt = System.currentTimeMillis();
 
     @Override
     public void onInitializeClient() {
+        MC = MinecraftClient.getInstance();
+        PrivateNode.init();
+
         FlintAPI.confirmLocationWithLocate();
 
         FlintAPI.registerFeatures(
@@ -106,7 +119,6 @@ public class DFRPClient implements ClientModInitializer {
                 .largeImageText(nodeDisplay + " - " + Node.getDisplayName(node))
                 .button(DiscordRichPresence.RPCButton.of("DiamondFire Discord Server", "https://discord.gg/sNJzkGCHNx"))
                 .button(DiscordRichPresence.RPCButton.of("Download DFRP", "https://modrinth.com/mod/dfrp"));
-
 
         if(currentMode.equals(Mode.SPAWN)) {
             builder.details("At spawn on " + nodeDisplay);
